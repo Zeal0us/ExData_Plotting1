@@ -1,0 +1,63 @@
+#this calls the script, also in the repo, for reading the data.
+source('./format_data.R');
+png('plot4.png')
+par(mfrow=c(2,2))
+with(data_table,
+    plot(
+        date_time,
+        Global_active_power,
+        type='l',
+        ylab="Global Active Power",
+        xlab=""
+        )
+    )
+with(data_table,
+    plot(
+        date_time,
+        Voltage,
+        type='l',
+        ylab="Voltage",
+        xlab="datetime"
+        )
+    )
+with(data_table,{
+    plot(
+        date_time,
+        Sub_metering_1,
+        type='n',
+        ylab="Energy sub metering",
+        xlab=""
+        )
+    lines(
+        date_time,
+        Sub_metering_1[!is.na(Sub_metering_1)],
+        col="black"
+        )
+    lines(
+        date_time,
+        Sub_metering_2[!is.na(Sub_metering_2)],
+        col="red"
+        )
+    lines(
+        date_time,
+        Sub_metering_3[!is.na(Sub_metering_3)],
+        col="blue"
+        )
+    legend(
+        'topright',
+        col=c('black','red','blue'),
+        legend=c('Sub_metering_1','Sub_metering_2','Sub_metering_3'),
+        lty=1,
+        lwd=1,
+        bty="n"
+    )
+})
+with(data_table,
+    plot(
+        date_time,
+        Global_reactive_power,
+        type='l',
+        xlab="datetime"
+        )
+    )
+dev.off()

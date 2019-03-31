@@ -1,0 +1,35 @@
+#this calls the script, also in the repo, for reading the data.
+source('./format_data.R');
+png('plot3.png')
+with(data_table,{
+    plot(
+        date_time,
+        Sub_metering_1,
+        type='n',
+        ylab="Energy sub metering",
+        xlab=""
+        )
+    lines(
+        date_time,
+        Sub_metering_1[!is.na(Sub_metering_1)],
+        col="black"
+        )
+    lines(
+        date_time,
+        Sub_metering_2[!is.na(Sub_metering_2)],
+        col="red"
+        )
+    lines(
+        date_time,
+        Sub_metering_3[!is.na(Sub_metering_3)],
+        col="blue"
+        )
+    legend(
+        'topright',
+        col=c('black','red','blue'),
+        legend=c('Sub_metering_1','Sub_metering_2','Sub_metering_3'),
+        lty=1,
+        lwd=1
+    )
+})
+dev.off()
